@@ -1,5 +1,8 @@
+using EcommerceAPI.Data;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Serilog;
 using System;
@@ -17,7 +20,20 @@ namespace EcommerceAPI
             try
             {
                 Log.Information("Iniciando a API");
-                CreateHostBuilder(args).Build().Run();
+
+                // Cria o host
+                var host = CreateHostBuilder(args).Build();
+
+                // Executa as migrations automaticamente ao iniciar
+                using (var scope = host.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    var context = services.GetRequiredService<AppDbContext>();
+                    context.Database.Migrate(); // Aplica as migrations no banco do Docker
+                }
+
+                host.Run(); // Inicia a aplicação
+                //CreateHostBuilder(args).Build().Run();
             }
             catch (Exception ex)
             {
