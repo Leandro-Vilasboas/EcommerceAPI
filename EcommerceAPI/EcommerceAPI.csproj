@@ -41,8 +41,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Interfaces\Reposity\" />
-    <Folder Include="Interfaces\Services\" />
     <Folder Include="Logs\" />
   </ItemGroup>
 

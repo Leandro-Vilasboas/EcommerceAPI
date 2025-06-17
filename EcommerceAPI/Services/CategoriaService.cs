@@ -1,41 +1,43 @@
 ﻿using AutoMapper;
 using EcommerceAPI.Data.CategoriaDtos;
 using EcommerceAPI.Data.Dtos;
+using EcommerceAPI.Interfaces.Reposity;
+using EcommerceAPI.Interfaces.Services;
 using EcommerceAPI.Models;
-using EcommerceAPI.Repository;
 using Serilog;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EcommerceAPI.Services
 {
-    public class CategoriaService
+    public class CategoriaService : ICategoriaService
     {
         private readonly IMapper _mapper;
-        private readonly CategoriaRepository _categoriaRepository;
+        private readonly ICategoriaRepository _categoriaRepository;
 
-        public CategoriaService(IMapper mapper, CategoriaRepository categoriaRepository)
+        public CategoriaService(IMapper mapper, ICategoriaRepository categoriaRepository)
         {
             _mapper = mapper;
             _categoriaRepository = categoriaRepository;
         }
 
-        public CategoriaModel CadastrarCategoria(CreateCategoriaDto categoriaDto)
+        public async Task<CategoriaModel> CadastrarCategoria(CreateCategoriaDto categoriaDto)
         {
             CategoriaModel categoria = _mapper.Map<CategoriaModel>(categoriaDto);
 
-            var nomeExiste = _categoriaRepository.VerficarNomeExiste(categoria);
+            var nomeExiste = await _categoriaRepository.VerficarNomeExiste(categoria);
             if (nomeExiste == null)
             {
-                return _categoriaRepository.AdicionarCategoria(categoria);
+                return await _categoriaRepository.AdicionarCategoria(categoria);
             }
             Log.Information("O nome informado já existe");
             return null;
         }
         
-        public CategoriaModel BuscarPorId(int id)
+        public async Task<CategoriaModel> BuscarPorId(int id)
         {
-            var verificarId = _categoriaRepository.VerificarId(id);
+            var verificarId = await _categoriaRepository.VerificarId(id);
             if (verificarId != null)
             {
                 ReadCategoriaDto categoriaDto = _mapper.Map<ReadCategoriaDto>(verificarId);
@@ -94,10 +96,10 @@ namespace EcommerceAPI.Services
             return true;
         }
 
-        public CategoriaModel EditarNome(int id, UpdateCategoriaDto updateCategoria)
+        public async Task<CategoriaModel> EditarNome(int id, UpdateCategoriaDto updateCategoria)
         {
-            var categoria = _categoriaRepository.VerificarId(id);
-            var nomeExiste = _categoriaRepository.EditarNome(updateCategoria);
+            var categoria = await _categoriaRepository.VerificarId(id);
+            var nomeExiste = await _categoriaRepository.EditarNome(updateCategoria);
             if (categoria == null)
             {
                 return null;
@@ -107,14 +109,14 @@ namespace EcommerceAPI.Services
                 return null;
             }
             _mapper.Map(updateCategoria, categoria);
-            categoria.DataDeAlteração = DateTime.Now;
+            categoria.DataDeAlteracao = DateTime.Now;
             _categoriaRepository.Salvar();
             return categoria;
         }
 
-        public CategoriaModel EditarStatus(int id)
+        public async Task<CategoriaModel> EditarStatus(int id)
         {
-            var categoria = _categoriaRepository.VerificarId(id);
+            var categoria = await _categoriaRepository.VerificarId(id);
             var subcategoria = _categoriaRepository.ValidarCategoriaId(id);
             if (categoria == null)
             {
@@ -123,30 +125,30 @@ namespace EcommerceAPI.Services
             if (categoria.Status == true)
             {
                 categoria.Status = false;
-                categoria.DataDeAlteração = DateTime.Now;
+                categoria.DataDeAlteracao = DateTime.Now;
                 foreach (SubcategoriaModel subcat in subcategoria)
                 {
                     subcat.Status = false;
-                    subcat.DataDeAlteração = DateTime.Now;
+                    subcat.DataDeAlteracao = DateTime.Now;
                 }
             }
             else
             {
                 categoria.Status = true;
-                categoria.DataDeAlteração = DateTime.Now;
+                categoria.DataDeAlteracao = DateTime.Now;
                 foreach (SubcategoriaModel subcat in subcategoria)
                 {
                     subcat.Status = true;
-                    subcat.DataDeAlteração = DateTime.Now;
+                    subcat.DataDeAlteracao = DateTime.Now;
                 }
             }
             _categoriaRepository.Salvar();
             return categoria;
         }
 
-        public CategoriaModel DeletarCategoria(int id)
+        public async Task<CategoriaModel> DeletarCategoria(int id)
         {
-            var categoria = _categoriaRepository.VerificarId(id);
+            var categoria = await _categoriaRepository.VerificarId(id);
             if(categoria == null)
             {
                 return null;

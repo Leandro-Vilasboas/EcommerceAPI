@@ -24,7 +24,7 @@ namespace EcommerceAPI.Migrations
                     Nome = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     DataDeCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataDeAlteração = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    DataDeAlteracao = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -48,7 +48,7 @@ namespace EcommerceAPI.Migrations
                     UF = table.Column<string>(type: "longtext", nullable: true),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     DataDeCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataDeAlteração = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                    DataDeAlteracao = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,7 +65,7 @@ namespace EcommerceAPI.Migrations
                     Nome = table.Column<string>(type: "varchar(128)", maxLength: 128, nullable: false),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     DataDeCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataDeAlteração = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DataDeAlteracao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CategoriaId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -96,7 +96,7 @@ namespace EcommerceAPI.Migrations
                     Quantidade = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<bool>(type: "tinyint(1)", nullable: false),
                     DataDeCriacao = table.Column<DateTime>(type: "datetime(6)", nullable: false),
-                    DataDeAlteração = table.Column<DateTime>(type: "datetime(6)", nullable: true),
+                    DataDeAlteracao = table.Column<DateTime>(type: "datetime(6)", nullable: true),
                     CategoriaId = table.Column<int>(type: "int", nullable: false),
                     SubcategoriaId = table.Column<int>(type: "int", nullable: false),
                     CentroDeDistribuicaoId = table.Column<int>(type: "int", nullable: false)

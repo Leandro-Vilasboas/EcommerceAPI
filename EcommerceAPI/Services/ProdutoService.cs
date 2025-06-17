@@ -64,7 +64,7 @@ namespace EcommerceAPI.Services
                 return null;
             }
             _mapper.Map(produtoDto, produto);
-            produto.DataDeAlteração = DateTime.Now;
+            produto.DataDeAlteracao = DateTime.Now;
             _context.SaveChanges();
             return null;
         }
@@ -79,12 +79,12 @@ namespace EcommerceAPI.Services
             if (produto.Status == true)
             {
                 produto.Status = false;
-                produto.DataDeAlteração = DateTime.Now;
+                produto.DataDeAlteracao = DateTime.Now;
             }
             else
             {
                 produto.Status = true; ;
-                produto.DataDeAlteração = DateTime.Now;
+                produto.DataDeAlteracao = DateTime.Now;
             }
             _context.SaveChanges();
             return null;

@@ -74,7 +74,7 @@ namespace EcommerceAPI.Services
             cdDto.Bairro = buscarCEP.Bairro;
             cdDto.UF = buscarCEP.UF;
             _mapper.Map(cdDto, cd);
-            cd.DataDeAlteração = DateTime.Now;
+            cd.DataDeAlteracao = DateTime.Now;
             _context.SaveChanges();
             return cd;
         }
@@ -89,12 +89,12 @@ namespace EcommerceAPI.Services
             if (cdModel.Status == true)
             {
                 cdModel.Status = false;
-                cdModel.DataDeAlteração = DateTime.Now;
+                cdModel.DataDeAlteracao = DateTime.Now;
             }
             else
             {
                 cdModel.Status = true; ;
-                cdModel.DataDeAlteração = DateTime.Now;
+                cdModel.DataDeAlteracao = DateTime.Now;
             }
             _context.SaveChanges();
             return null;

@@ -37,7 +37,7 @@ namespace EcommerceAPI.Migrations
                     b.Property<string>("Complemento")
                         .HasColumnType("longtext");
 
-                    b.Property<DateTime?>("DataDeAlteração")
+                    b.Property<DateTime?>("DataDeAlteracao")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DataDeCriacao")
@@ -72,7 +72,7 @@ namespace EcommerceAPI.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DataDeAlteração")
+                    b.Property<DateTime?>("DataDeAlteracao")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DataDeCriacao")
@@ -109,7 +109,7 @@ namespace EcommerceAPI.Migrations
                     b.Property<double>("Comprimento")
                         .HasColumnType("double");
 
-                    b.Property<DateTime?>("DataDeAlteração")
+                    b.Property<DateTime?>("DataDeAlteracao")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DataDeCriacao")
@@ -163,7 +163,7 @@ namespace EcommerceAPI.Migrations
                     b.Property<int>("CategoriaId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DataDeAlteração")
+                    b.Property<DateTime?>("DataDeAlteracao")
                         .HasColumnType("datetime(6)");
 
                     b.Property<DateTime>("DataDeCriacao")
