@@ -18,7 +18,7 @@ namespace EcommerceAPI.Data.CDDtos
         public string UF { get; set; }
         public bool Status { get; set; }
         public DateTime DataDeCriacao { get; set; } = DateTime.Now;
-        public DateTime? DataDeAlteração { get; set; }
+        public DateTime? DataDeAlteracao { get; set; }
         public static List<ProdutoModel> Produto { get; set; }
     }
 }

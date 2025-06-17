@@ -1,4 +1,6 @@
 using EcommerceAPI.Data;
+using EcommerceAPI.Interfaces.Reposity;
+using EcommerceAPI.Interfaces.Services;
 using EcommerceAPI.Repository;
 using EcommerceAPI.Services;
 using Microsoft.AspNetCore.Builder;
@@ -37,10 +39,12 @@ namespace EcommerceAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "EcommerceAPI", Version = "v1" });
             });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddScoped<SubcategoriaRepository>();
-            services.AddScoped<SubcategoriaService>();
             services.AddScoped<CategoriaRepository>();
             services.AddScoped<CategoriaService>();
+            services.AddScoped<ICategoriaService, CategoriaService>();
+            services.AddScoped<ICategoriaRepository, CategoriaRepository>();
+            services.AddScoped<SubcategoriaRepository>();
+            services.AddScoped<SubcategoriaService>();
             services.AddScoped<ProdutoRepository>();
             services.AddScoped<ProdutoService>();
             services.AddScoped<CDRepository>();

@@ -1,13 +1,16 @@
-﻿using System.Linq;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using EcommerceAPI.Data;
 using EcommerceAPI.Models;
 using EcommerceAPI.Data.Dtos;
 using EcommerceAPI.Data.CategoriaDtos;
+using System.Threading.Tasks;
+using EcommerceAPI.Interfaces.Reposity;
 
 
 namespace EcommerceAPI.Repository
 {
-    public class CategoriaRepository
+    public class CategoriaRepository : ICategoriaRepository
     {
         private readonly AppDbContext _context;
 
@@ -16,10 +19,10 @@ namespace EcommerceAPI.Repository
             _context = context;
         }
 
-        public CategoriaModel AdicionarCategoria(CategoriaModel categoria)
+        public async Task<CategoriaModel> AdicionarCategoria(CategoriaModel categoria)
         {
-            _context.Categorias.Add(categoria);
-            _context.SaveChanges();
+            await _context.Categorias.AddAsync(categoria);
+            await _context.SaveChangesAsync();
             return categoria;
         }
 
@@ -35,21 +38,21 @@ namespace EcommerceAPI.Repository
             return categorias;
         }
 
-        public CategoriaModel VerificarId(int id)
+        public async Task<CategoriaModel> VerificarId(int id)
         {
-            var categoria = _context.Categorias.FirstOrDefault(c => c.Id == id);
+            var categoria = await _context.Categorias.FirstOrDefaultAsync(c => c.Id == id);
             return categoria;
         }
 
-        public CategoriaModel VerficarNomeExiste(CategoriaModel categoria)
+        public async Task<CategoriaModel> VerficarNomeExiste(CategoriaModel categoria)
         {
-            var nomeExiste = _context.Categorias.FirstOrDefault(c => c.Nome == categoria.Nome);
+            var nomeExiste = await _context.Categorias.FirstOrDefaultAsync(c => c.Nome == categoria.Nome);
             return nomeExiste;
         }
 
-        public CategoriaModel EditarNome(UpdateCategoriaDto updateCategoria)
+        public async Task<CategoriaModel> EditarNome(UpdateCategoriaDto updateCategoria)
         {
-            var editar = _context.Categorias.FirstOrDefault(c => c.Nome == updateCategoria.Nome);
+            var editar = await _context.Categorias.FirstOrDefaultAsync(c => c.Nome == updateCategoria.Nome);
             return editar;
         }
 

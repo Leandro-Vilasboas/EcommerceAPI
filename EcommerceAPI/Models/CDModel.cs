@@ -20,7 +20,7 @@ namespace EcommerceAPI.Models
         public string UF { get; set; }
         public bool Status { get; set; } = true;
         public DateTime DataDeCriacao { get; set; } = DateTime.Now;
-        public DateTime? DataDeAlteração { get; set; }
+        public DateTime? DataDeAlteracao { get; set; }
 
         [JsonIgnore]
         public virtual List<ProdutoModel> Produto { get; set; }

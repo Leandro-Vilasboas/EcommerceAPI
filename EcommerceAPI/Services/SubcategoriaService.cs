@@ -132,7 +132,7 @@ namespace EcommerceAPI.Services
                 return null;
             }
             _mapper.Map(updateSubcategoria, subcategoria);
-            subcategoria.DataDeAlteração = DateTime.Now;
+            subcategoria.DataDeAlteracao = DateTime.Now;
             _subcategoriaRepository.Salvar();
             return subcategoria;
         }
@@ -147,12 +147,12 @@ namespace EcommerceAPI.Services
             if (subcategoria.Status == true)
             {
                 subcategoria.Status = false;
-                subcategoria.DataDeAlteração = DateTime.Now;
+                subcategoria.DataDeAlteracao = DateTime.Now;
             }
             else
             {
                 subcategoria.Status = true;
-                subcategoria.DataDeAlteração = DateTime.Now;
+                subcategoria.DataDeAlteracao = DateTime.Now;
             }
             _subcategoriaRepository.Salvar();
             return subcategoria;

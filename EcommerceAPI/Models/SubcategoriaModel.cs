@@ -17,7 +17,7 @@ namespace EcommerceAPI.Models
         public string Nome { get; set; }
         public bool Status { get; set; } = true;
         public DateTime DataDeCriacao { get; set; } = DateTime.Now;
-        public DateTime? DataDeAlteração { get; set; }
+        public DateTime? DataDeAlteracao { get; set; }
         public virtual CategoriaModel Categoria { get; set; }
         public int CategoriaId { get; set; }
 
