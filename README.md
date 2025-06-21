@@ -50,7 +50,7 @@ docker-compose up -d
 
 ---
 
-## 🔄 Alternar string de conexão conforme ambiente
+## 🔄 Alternar string de conexão (appsettings.json) conforme ambiente
 
 * **Produção ou execução em container Docker:**
 
