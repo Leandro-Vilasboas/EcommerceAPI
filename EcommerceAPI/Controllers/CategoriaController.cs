@@ -70,11 +70,11 @@ namespace EcommerceAPI.Controllers
         public IActionResult FiltrarCategorias([FromQuery] FiltroCategoriaDto filtro)
         {
             Log.Information("Iniciando filtros variados na Categoria");
-            /*var verificaNomeETamanho = _categoriaService.ValidarNomeETamanho(filtro.NomeCat);
+            var verificaNomeETamanho = _categoriaService.ValidarNomeETamanho(filtro.NomeCat);
             if(verificaNomeETamanho == false)
             {
                 return BadRequest("Insira um nome com no mínimo 3 caracteres");
-            }*/
+            }
 
             var validarOrdem = _categoriaService.ValidarOrdem(filtro.OrdemCat);
             if(validarOrdem == false)

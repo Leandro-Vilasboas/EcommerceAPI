@@ -77,7 +77,7 @@ namespace EcommerceAPI.Services
             }
             return categorias;
         }
-        /*
+        
         public bool ValidarNomeETamanho(string nomeCat)
         {
             if (nomeCat != null && nomeCat.Length < 3)
@@ -85,7 +85,7 @@ namespace EcommerceAPI.Services
                 return false;
             }
             return true;
-        }*/
+        }
 
         public bool ValidarOrdem(string ordem)
         {

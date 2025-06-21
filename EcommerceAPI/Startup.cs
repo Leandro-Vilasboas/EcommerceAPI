@@ -1,4 +1,5 @@
 using EcommerceAPI.Data;
+using EcommerceAPI.Interfaces.Repository;
 using EcommerceAPI.Interfaces.Reposity;
 using EcommerceAPI.Interfaces.Services;
 using EcommerceAPI.Repository;
@@ -45,6 +46,8 @@ namespace EcommerceAPI
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<SubcategoriaRepository>();
             services.AddScoped<SubcategoriaService>();
+            services.AddScoped<ISubcategoriaService, SubcategoriaService>();
+            services.AddScoped<ISubcategoriaRepository, SubcategoriaRepository>();
             services.AddScoped<ProdutoRepository>();
             services.AddScoped<ProdutoService>();
             services.AddScoped<CDRepository>();

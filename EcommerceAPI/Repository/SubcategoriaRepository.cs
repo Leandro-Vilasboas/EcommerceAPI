@@ -1,12 +1,15 @@
 ﻿using EcommerceAPI.Data;
 using EcommerceAPI.Data.Dtos;
 using EcommerceAPI.Data.SubcategoriaDtos;
+using EcommerceAPI.Interfaces.Repository;
 using EcommerceAPI.Models;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace EcommerceAPI.Repository
 {
-    public class SubcategoriaRepository
+    public class SubcategoriaRepository : ISubcategoriaRepository
     {
 
         private readonly AppDbContext _context;
@@ -16,28 +19,28 @@ namespace EcommerceAPI.Repository
             _context = context;
         }
 
-        public SubcategoriaModel AdicionarSubcategoria(SubcategoriaModel subcategoria)
+        public async Task<SubcategoriaModel> AdicionarSubcategoria(SubcategoriaModel subcategoria)
         {
-            _context.Subcategorias.Add(subcategoria);
+            await _context.Subcategorias.AddAsync(subcategoria);
             _context.SaveChanges();
             return subcategoria;
         }
 
-        public CategoriaModel ValidarCategoriaId(CreateSubcategoriaDto subcategoriaDto)
+        public async Task<CategoriaModel> ValidarCategoriaId(CreateSubcategoriaDto subcategoriaDto)
         {
-            var categoriaId = _context.Categorias.FirstOrDefault(c => c.Id == subcategoriaDto.CategoriaId);
+            var categoriaId = await _context.Categorias.FirstOrDefaultAsync(c => c.Id == subcategoriaDto.CategoriaId);
             return categoriaId;
         }
         
-        public SubcategoriaModel VerificarNomeExiste(CreateSubcategoriaDto subcategoriaDto)
+        public async Task<SubcategoriaModel> VerificarNomeExiste(CreateSubcategoriaDto subcategoriaDto)
         {
-            var nomeExistente = _context.Subcategorias.FirstOrDefault(c => c.Nome == subcategoriaDto.Nome);
+            var nomeExistente = await _context.Subcategorias.FirstOrDefaultAsync(c => c.Nome == subcategoriaDto.Nome);
             return nomeExistente;
         }
 
-        public SubcategoriaModel VerificarId(int id)
+        public async Task<SubcategoriaModel> VerificarId(int id)
         {
-            var subcategoria = _context.Subcategorias.FirstOrDefault(c => c.Id == id);
+            var subcategoria = await _context.Subcategorias.FirstOrDefaultAsync(c => c.Id == id);
             return subcategoria;
         }
 
@@ -53,9 +56,9 @@ namespace EcommerceAPI.Repository
             return subcategorias;
         }
 
-        public SubcategoriaModel EditarNome(UpdateSubcategoriaDto updateSubcategoria)
+        public async Task<SubcategoriaModel> EditarNome(UpdateSubcategoriaDto updateSubcategoria)
         {
-            var editar = _context.Subcategorias.FirstOrDefault(c => c.Nome == updateSubcategoria.Nome);
+            var editar = await _context.Subcategorias.FirstOrDefaultAsync(c => c.Nome == updateSubcategoria.Nome);
             return editar;
         }
 
