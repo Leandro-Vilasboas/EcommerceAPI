@@ -8,10 +8,11 @@ using EcommerceAPI.Data.SubcategoriaDtos;
 using System.Linq;
 using System;
 using System.Threading.Tasks;
+using EcommerceAPI.Interfaces.Services;
 
 namespace EcommerceAPI.Services
 {
-    public class SubcategoriaService
+    public class SubcategoriaService : ISubcategoriaService
     {
         private readonly IMapper _mapper;
         private readonly SubcategoriaRepository _subcategoriaRepository;
@@ -22,20 +23,20 @@ namespace EcommerceAPI.Services
             _subcategoriaRepository = subcategoriaRepository;
         }
 
-        public SubcategoriaModel CadastrarSubcategoria(CreateSubcategoriaDto subcategoriaDto)
+        public async Task<SubcategoriaModel> CadastrarSubcategoria(CreateSubcategoriaDto subcategoriaDto)
         {
-            var nomeExiste = _subcategoriaRepository.VerificarNomeExiste(subcategoriaDto);
+            var nomeExiste = await _subcategoriaRepository.VerificarNomeExiste(subcategoriaDto);
             SubcategoriaModel subcategoria = _mapper.Map<SubcategoriaModel>(subcategoriaDto);
             if (nomeExiste == null)
             {
-                return _subcategoriaRepository.AdicionarSubcategoria(subcategoria);                
+                return await _subcategoriaRepository.AdicionarSubcategoria(subcategoria);                
             }
             return null;
         }
 
-        public CategoriaModel ValidarCategoriaId(CreateSubcategoriaDto subcategoriaDto)
+        public async Task<CategoriaModel> ValidarCategoriaId(CreateSubcategoriaDto subcategoriaDto)
         {
-            var subcategoria = _subcategoriaRepository.ValidarCategoriaId(subcategoriaDto);
+            var subcategoria = await _subcategoriaRepository.ValidarCategoriaId(subcategoriaDto);
             if(subcategoria == null)
             {
                 return null;
@@ -43,9 +44,9 @@ namespace EcommerceAPI.Services
             return subcategoria;
         }
 
-        public CategoriaModel CompararNomeCatComSub(CreateSubcategoriaDto subcategoriaDto)
+        public async Task<CategoriaModel> CompararNomeCatComSub(CreateSubcategoriaDto subcategoriaDto)
         {
-            var categoria = _subcategoriaRepository.ValidarCategoriaId(subcategoriaDto);
+            var categoria = await _subcategoriaRepository.ValidarCategoriaId(subcategoriaDto);
             if (categoria.Nome.Equals(subcategoriaDto.Nome))
             {
                 return null;
@@ -53,9 +54,9 @@ namespace EcommerceAPI.Services
             return categoria;
         }
 
-        public SubcategoriaModel BuscarPorId(int id)
+        public async Task<SubcategoriaModel> BuscarPorId(int id)
         {
-            var verificarId = _subcategoriaRepository.VerificarId(id);
+            var verificarId = await _subcategoriaRepository.VerificarId(id);
             if (verificarId != null)
             {
                 ReadSubcategoriaDto subcategoriaDto = _mapper.Map<ReadSubcategoriaDto>(verificarId);
@@ -71,33 +72,32 @@ namespace EcommerceAPI.Services
             //mostrar filtros por nome           
             if (filtro.NomeSub != null && filtro.NomeSub.Length >= 3)
             {
-                subcategorias = _subcategoriaRepository.FiltrarPorNome(filtro)
-                    .Skip(paginacao.ItensPagina * paginacao.Pagina).Take(paginacao.ItensPagina);
+                subcategorias = _subcategoriaRepository.FiltrarPorNome(filtro).ToList().AsQueryable();
             }
             else
             {
-                subcategorias = _subcategoriaRepository.FiltrarTodos()
-                    .Skip(paginacao.ItensPagina * paginacao.Pagina).Take(paginacao.ItensPagina);
+                subcategorias = _subcategoriaRepository.FiltrarTodos().ToList().AsQueryable();
             }
 
             //mostrar filtros por status
             if (filtro.StatusSub != null)
             {
-                subcategorias = subcategorias.Where(c => c.Status == filtro.StatusSub)
-                    .Skip(paginacao.ItensPagina * paginacao.Pagina).Take(paginacao.ItensPagina);
+                subcategorias = subcategorias.Where(c => c.Status == filtro.StatusSub);
             }
 
             //mostrar filtros por ordem descendente
             if (filtro.OrdemSub == "desc")
             {
-                subcategorias = subcategorias.OrderByDescending(c => c.Nome)
-                    .Skip(paginacao.ItensPagina * paginacao.Pagina).Take(paginacao.ItensPagina);
+                subcategorias = subcategorias.OrderByDescending(c => c.Nome);
             }
             if (filtro.OrdemSub == "asc")
             {
-                subcategorias = subcategorias.OrderBy(c => c.Nome)
-                    .Skip(paginacao.ItensPagina * paginacao.Pagina).Take(paginacao.ItensPagina);
+                subcategorias = subcategorias.OrderBy(c => c.Nome);
             }
+
+            subcategorias = subcategorias
+            .Skip(paginacao.ItensPagina * paginacao.Pagina)
+            .Take(paginacao.ItensPagina);
             return subcategorias;
         }
 
@@ -119,10 +119,10 @@ namespace EcommerceAPI.Services
             return true;
         }
 
-        public SubcategoriaModel EditarNome(int id, UpdateSubcategoriaDto updateSubcategoria)
+        public async Task<SubcategoriaModel> EditarNome(int id, UpdateSubcategoriaDto updateSubcategoria)
         {
-            var subcategoria = _subcategoriaRepository.VerificarId(id);
-            var nomeExiste = _subcategoriaRepository.EditarNome(updateSubcategoria);
+            var subcategoria = await _subcategoriaRepository.VerificarId(id);
+            var nomeExiste = await _subcategoriaRepository.EditarNome(updateSubcategoria);
             if (subcategoria == null)
             {
                 return null;
@@ -137,9 +137,9 @@ namespace EcommerceAPI.Services
             return subcategoria;
         }
 
-        public SubcategoriaModel EditarStatus(int id)
+        public async Task<SubcategoriaModel> EditarStatus(int id)
         {
-            var subcategoria = _subcategoriaRepository.VerificarId(id);
+            var subcategoria = await _subcategoriaRepository.VerificarId(id);
             if (subcategoria == null)
             {
                 return null;
@@ -158,9 +158,9 @@ namespace EcommerceAPI.Services
             return subcategoria;
         }
 
-        public SubcategoriaModel DeletarSubcategoria(int id)
+        public async Task<SubcategoriaModel> DeletarSubcategoria(int id)
         {
-            var subcategoria = _subcategoriaRepository.VerificarId(id);
+            var subcategoria = await _subcategoriaRepository.VerificarId(id);
             if (subcategoria == null)
             {
                 return null;

@@ -11,6 +11,7 @@ namespace EcommerceAPI.Interfaces.Services
         Task<CategoriaModel> CadastrarCategoria(CreateCategoriaDto categoriaDto);
         Task<CategoriaModel> BuscarPorId(int id);
         IQueryable<CategoriaModel> FiltrarCategorias(FiltroCategoriaDto filtro);
+        bool ValidarNomeETamanho(string nomeCat);
         bool ValidarOrdem(string ordem);
         Task<CategoriaModel> EditarNome(int id, UpdateCategoriaDto updateCategoria);
         Task<CategoriaModel> EditarStatus(int id);
